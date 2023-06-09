@@ -1,5 +1,5 @@
 import { Spin } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
@@ -13,27 +13,32 @@ const Registration = () => {
   const dispatch = useDispatch()
   const serverState = useSelector((state) => state.registr)
   const { errorData, loading, currentUser } = serverState
-  const loginState = useSelector((state) => state.login)
-  const { isLogged } = loginState
-  console.log('in Registration component isLogged=', isLogged)
+  // const loginState = useSelector((state) => state.login)
+  // const { isLogged } = loginState
   const shouldRedirect = !loading && currentUser
 
   const {
     register,
     watch,
+    setFocus,
     formState: { errors, isValid },
     handleSubmit,
   } = useForm({ mode: 'onBlur' })
 
   const onSubmit = (data) => {
     const { password, email } = data
-    const loginObj = { email, password }
-    dispatch(registrAccount(data)).then(() => dispatch(loginAccount(loginObj)))
+    dispatch(registrAccount(data))
+      .then(() => dispatch(loginAccount({ email, password })))
+      .then((res) => console.log(res))
   }
 
   if (loading) {
     return <Spin style={{ marginTop: 300 }}></Spin>
   }
+
+  useEffect(() => {
+    setFocus('username')
+  }, [])
 
   const userNameErr = errorData.username ? 'Username ' + errorData.username : null
   const emailErr = errorData.email ? 'Email ' + errorData.email : null
@@ -67,7 +72,6 @@ const Registration = () => {
               required: 'Email field is required.',
               pattern: {
                 value: /^[a-z0-9._%+-]+@[a-z0-9-.]+\.[a-z0-9-.]+$/,
-
                 message: 'Invalid email address.',
               },
             })}

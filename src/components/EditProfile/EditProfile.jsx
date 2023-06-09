@@ -41,7 +41,7 @@ const EditProfile = () => {
   }
 
   if (!isLogged) {
-    return <Redirect to="/login"></Redirect>
+    return <Redirect to="/sign-in"></Redirect>
   }
 
   return (
