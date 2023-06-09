@@ -1,0 +1,84 @@
+.login {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 49px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 48px 32px;
+    width: 384px;
+    min-height: 374px;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
+    border-radius: 6px;
+    font-family: 'Roboto';
+
+    &__title {
+        margin-bottom: 21px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+        text-align: center;
+        color: #262626;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        margin-bottom: 12px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        color: black;
+    }
+
+    &__input {
+        height: 40px;
+        width: 320px;
+        padding-left: 12px;
+        border: 1px solid #D9D9D9;
+        border-radius: 4px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    &__input:nth-child(4) {
+        margin-bottom: 20px;
+    }
+
+    &__error {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        color: red;
+      }
+
+    &__submit {
+        height: 40px;
+        margin-bottom: 8px;
+        background: #1890FF;
+        border-radius: 4px;
+        color: #FFFFFF;
+    }
+
+    &__reg {
+        font-size: 12px;
+        line-height: 20px;
+        color: #8C8C8C;
+    }
+
+    &__sign-up {
+        color:  #1890FF;
+        text-decoration: none;
+    }
+}
