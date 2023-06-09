@@ -18,7 +18,6 @@ export const loginAccount = createAsyncThunk('login/loginAccount', async (data, 
       },
       body: JSON.stringify({ user: data }),
     })
-
     if (!response.ok) {
       const error = await response.json()
       dispatch(setLoginErrorData(true))

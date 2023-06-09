@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 
 import { registrAccount } from '../../store/registrSlice'
+import { loginAccount } from '../../store/loginSlice'
 
 import style from './Registration.module.scss'
 
@@ -12,17 +13,22 @@ const Registration = () => {
   const dispatch = useDispatch()
   const serverState = useSelector((state) => state.registr)
   const { errorData, loading, currentUser } = serverState
+  const loginState = useSelector((state) => state.login)
+  const { isLogged } = loginState
+  console.log('in Registration component isLogged=', isLogged)
   const shouldRedirect = !loading && currentUser
 
   const {
     register,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
   } = useForm({ mode: 'onBlur' })
 
   const onSubmit = (data) => {
-    dispatch(registrAccount(data))
+    const { password, email } = data
+    const loginObj = { email, password }
+    dispatch(registrAccount(data)).then(() => dispatch(loginAccount(loginObj)))
   }
 
   if (loading) {
@@ -118,7 +124,11 @@ const Registration = () => {
           <span>I agree to the processing of my personal information</span>
         </label>
         <span className={style['registr__terms-error']}>{errors?.political && errors?.political?.message}</span>
-        <button className={style.registr__submit} type="submit">
+        <button
+          className={isValid ? style.registr__submit : style.registr__submitDisabled}
+          type="submit"
+          disabled={!isValid}
+        >
           Create
         </button>
       </form>

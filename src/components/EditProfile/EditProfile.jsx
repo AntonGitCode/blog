@@ -13,13 +13,20 @@ const EditProfile = () => {
   const dispatch = useDispatch()
   const isLogged = useSelector((state) => state.user.isLogged)
   const editState = useSelector((state) => state.edit)
+  const userData = useSelector((state) => state.user.userData)
   const { loading, error } = editState
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: 'onBlur' })
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      username: userData.username,
+      email: userData.email,
+    },
+  })
 
   const onSubmit = (data) => {
     dispatch(editAccount(data))
