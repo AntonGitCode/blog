@@ -31,7 +31,6 @@ export const editAccount = createAsyncThunk('edit/editAccount', async (data, { r
     const user = await response.json()
 
     localStorage.setItem('token', user.user.token)
-
     dispatch(setUserData(user.user))
   } catch (error) {
     return rejectWithValue(error.message)

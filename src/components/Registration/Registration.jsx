@@ -27,9 +27,7 @@ const Registration = () => {
 
   const onSubmit = (data) => {
     const { password, email } = data
-    dispatch(registrAccount(data))
-      .then(() => dispatch(loginAccount({ email, password })))
-      .then((res) => console.log(res))
+    dispatch(registrAccount(data)).then(() => dispatch(loginAccount({ email, password })))
   }
 
   if (loading) {

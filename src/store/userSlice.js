@@ -11,7 +11,6 @@ const initialState = {
 export const getCurrentUser = createAsyncThunk('login/getCurrentUser', async (token, { rejectWithValue, dispatch }) => {
   try {
     const response = await fetch(`${BASE_URL}user`, {
-      // const response = await fetch('https://api.realworld.io/api/user', {
       method: 'GET',
       headers: {
         Authorization: `Token ${token}`,

@@ -94,11 +94,11 @@ const EditProfile = () => {
           ></input>
           <span className={style.edit__error}>{errors?.newPassword && errors?.newPassword?.message}</span>
         </label>
-        <label className={style.edit__label} htmlFor="avatar">
+        <label className={style.edit__label} htmlFor="image">
           <span>Avatar image (url)</span>
           <input
             className={style.edit__input}
-            {...register('avatar', {
+            {...register('image', {
               pattern: {
                 value:
                   // eslint-disable-next-line no-useless-escape
@@ -107,10 +107,10 @@ const EditProfile = () => {
               },
             })}
             type="text"
-            id="avatar"
+            id="image"
             placeholder="Avatar image"
           ></input>
-          <span className={style.edit__error}>{errors?.avatar && errors?.avatar?.message}</span>
+          <span className={style.edit__error}>{errors?.image && errors?.image?.message}</span>
         </label>
         <button className={style.edit__submit} type="submit">
           Save
