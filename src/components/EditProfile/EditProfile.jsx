@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 import { editAccount } from '../../store/editSlice'
 import Error from '../Error'
+import smileycyrus from '../../assets/smileycyrus.jpg'
 
 import style from './EditProfile.module.scss'
 
@@ -29,7 +30,15 @@ const EditProfile = () => {
   })
 
   const onSubmit = (data) => {
-    dispatch(editAccount(data))
+    const img = new Image()
+    img.src = data.image
+    img.onerror = () => {
+      data.image = smileycyrus
+      dispatch(editAccount(data))
+    }
+    img.onload = () => {
+      dispatch(editAccount(data))
+    }
   }
 
   if (loading) {
@@ -100,9 +109,8 @@ const EditProfile = () => {
             className={style.edit__input}
             {...register('image', {
               pattern: {
-                value:
-                  // eslint-disable-next-line no-useless-escape
-                  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
+                value: /^((http|https):\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i,
+                // /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
                 message: 'Invalid url address.',
               },
             })}
