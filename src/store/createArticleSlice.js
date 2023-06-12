@@ -26,7 +26,6 @@ export const createArticle = createAsyncThunk(
       if (!response.ok) {
         const error = await response.json()
         dispatch(setErrorData(error.errors))
-        console.log(error)
         throw new Error('Create error', error.status)
       }
 

@@ -23,7 +23,6 @@ export const editAccount = createAsyncThunk('edit/editAccount', async (data, { r
 
     if (!response.ok) {
       const error = await response.json()
-      console.log(error)
       dispatch(setErrorData(true))
       throw new Error('Editing error', error.status)
     }
