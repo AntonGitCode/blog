@@ -1,8 +1,8 @@
 import { Spin } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { registrAccount } from '../../store/registrSlice'
 import { loginAccount } from '../../store/loginSlice'
@@ -16,6 +16,7 @@ const Registration = () => {
   const loginState = useSelector((state) => state.login)
   const { isLogged } = loginState
   const shouldRedirect = !loading && currentUser && isLogged
+  const [redirecting, setRedirecting] = useState(false)
 
   const {
     register,
@@ -24,21 +25,28 @@ const Registration = () => {
     handleSubmit,
   } = useForm({ mode: 'onBlur' })
 
-  const onSubmit = (data) => {
+  const history = useHistory()
+  const onSubmit = async (data) => {
     const { password, email } = data
-    dispatch(registrAccount(data)).then(() => dispatch(loginAccount({ email, password })))
+    setRedirecting(true)
+    // dispatch(registrAccount(data)).then(() => dispatch(loginAccount({ email, password })))
+    await dispatch(registrAccount(data))
+    await dispatch(loginAccount({ email, password }))
+    setRedirecting(false)
   }
 
-  if (loading) {
+  useEffect(() => {
+    if (shouldRedirect && !redirecting) history.push('/')
+  }, [redirecting])
+
+  if (loading || redirecting) {
     return <Spin style={{ marginTop: 300 }}></Spin>
   }
 
   const userNameErr = errorData.username ? 'Username ' + errorData.username : null
   const emailErr = errorData.email ? 'Email ' + errorData.email : null
 
-  return shouldRedirect ? (
-    <Redirect to="/" />
-  ) : (
+  return (
     <div className={style.registr}>
       <span className={style.registr__title}>Create new account</span>
       <form className={style.registr__form} onSubmit={handleSubmit(onSubmit)}>
