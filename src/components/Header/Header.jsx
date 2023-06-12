@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { setEdited } from '../../store/editSlice'
 import { setIsLogged } from '../../store/loginSlice'
@@ -18,6 +18,7 @@ const Header = () => {
   const editState = useSelector((state) => state.edit)
   const { newUserData, edited } = editState
   const token = localStorage.getItem('token')
+  const history = useHistory()
 
   useEffect(() => {
     if (token) {
@@ -36,7 +37,7 @@ const Header = () => {
     localStorage.removeItem('token')
     dispatch(setIsLogged(false))
     dispatch(setLogout())
-    return <Redirect to="/"></Redirect>
+    history.push('/')
   }
 
   const actions = (state) => {

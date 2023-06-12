@@ -29,7 +29,6 @@ const Registration = () => {
   const onSubmit = async (data) => {
     const { password, email } = data
     setRedirecting(true)
-    // dispatch(registrAccount(data)).then(() => dispatch(loginAccount({ email, password })))
     await dispatch(registrAccount(data))
     await dispatch(loginAccount({ email, password }))
     setRedirecting(false)
