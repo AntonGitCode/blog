@@ -1,10 +1,10 @@
 import { Spin } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { editAccount } from '../../store/editSlice'
+import { editAccount, editSlice } from '../../store/editSlice'
 import Error from '../Error'
 
 import style from './EditProfile.module.scss'
@@ -14,7 +14,7 @@ const EditProfile = () => {
   const isLogged = useSelector((state) => state.user.isLogged)
   const editState = useSelector((state) => state.edit)
   const userData = useSelector((state) => state.user.userData)
-  const { loading, error } = editState
+  const { loading, error, isCompleted } = editState
 
   const {
     register,
@@ -29,6 +29,10 @@ const EditProfile = () => {
       image: userData.image,
     },
   })
+
+  useEffect(() => {
+    if (isCompleted) setTimeout(() => dispatch(editSlice.actions.setCompleted(false)), 1800)
+  }, [isCompleted])
 
   const onSubmit = (data) => {
     if (data.image?.length) {
@@ -125,6 +129,7 @@ const EditProfile = () => {
         <button className={style.edit__submit} type="submit">
           Save
         </button>
+        {isCompleted ? <span className={style.edit__completed}>Изменения успешно сохранены</span> : null}
       </form>
     </div>
   )

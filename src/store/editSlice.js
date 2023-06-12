@@ -7,6 +7,7 @@ const initialState = {
   edited: false,
   loading: false,
   error: false,
+  isCompleted: false,
 }
 
 export const editAccount = createAsyncThunk('edit/editAccount', async (data, { rejectWithValue, dispatch }) => {
@@ -31,6 +32,7 @@ export const editAccount = createAsyncThunk('edit/editAccount', async (data, { r
 
     localStorage.setItem('token', user.user.token)
     dispatch(setUserData(user.user))
+    return user //
   } catch (error) {
     return rejectWithValue(error.message)
   }
@@ -50,10 +52,14 @@ export const editSlice = createSlice({
     setErrorData: (state, action) => {
       state.error = action.payload
     },
+    setCompleted: (state, action) => {
+      state.isCompleted = action.payload
+    },
   },
   extraReducers: {
     [editAccount.fulfilled]: (state) => {
       state.loading = false
+      state.isCompleted = true
     },
     [editAccount.pending]: (state) => {
       state.loading = true

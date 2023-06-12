@@ -70,4 +70,15 @@
         border-radius: 4px;
         color: #FFFFFF;
     }
+
+    &__completed {
+        color: darkgreen;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 10px;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
 }
