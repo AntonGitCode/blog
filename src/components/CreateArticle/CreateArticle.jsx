@@ -40,7 +40,9 @@ const CreateArticle = () => {
     formState: { errors },
     handleSubmit,
     control,
-  } = useForm({ defaultValues: prevArticleData })
+  } = useForm({
+    defaultValues: prevArticleData,
+  })
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -131,9 +133,10 @@ const CreateArticle = () => {
             id="body"
             placeholder="Text"
           ></textarea>
-          <span className={style['create__error']}>{errors?.text && errors?.text?.message}</span>
+          <span className={style['create__error']}>{errors?.body && errors?.body?.message}</span>
         </label>
-        <label className={style.create__label} htmlFor="tags">
+
+        <label className={style.create__label} htmlFor="tagList">
           <span>Tags</span>
           <div className={style.tags}>
             {!fields.length && (
@@ -167,7 +170,7 @@ const CreateArticle = () => {
                     </button>
                   )}
                 </div>
-                <span className={style['create__error']}>{errors?.tags && errors?.tags?.message}</span>
+                <span className={style['create__error']}>{errors?.tagList && errors?.tagList?.message}</span>
               </div>
             ))}
           </div>
