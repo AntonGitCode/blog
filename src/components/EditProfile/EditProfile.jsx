@@ -31,7 +31,6 @@ const EditProfile = () => {
   })
 
   const onSubmit = (data) => {
-    console.log('*****на сабмите userData ***', userData)
     if (data.image?.length) {
       const img = new Image()
       img.src = data.image

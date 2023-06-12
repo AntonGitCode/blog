@@ -72,7 +72,6 @@ export const updateArticle = createAsyncThunk(
       }
 
       const article = await response.json()
-      console.log()
       dispatch(setEditedSlug(article.article.slug))
     } catch (error) {
       return rejectWithValue(error.message)
