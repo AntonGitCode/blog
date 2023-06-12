@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom'
 
 import { editAccount } from '../../store/editSlice'
 import Error from '../Error'
-import smileycyrus from '../../assets/smileycyrus.jpg'
 
 import style from './EditProfile.module.scss'
 
@@ -21,24 +20,28 @@ const EditProfile = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
       username: userData.username,
       email: userData.email,
+      image: userData.image,
     },
   })
 
   const onSubmit = (data) => {
-    const img = new Image()
-    img.src = data.image
-    img.onerror = () => {
-      data.image = smileycyrus
-      dispatch(editAccount(data))
-    }
-    img.onload = () => {
-      dispatch(editAccount(data))
-    }
+    console.log('*****на сабмите userData ***', userData)
+    if (data.image?.length) {
+      const img = new Image()
+      img.src = data.image
+      img.onerror = () => {
+        setError('image', { message: 'Check url - no image on this url ' })
+      }
+      img.onload = () => {
+        dispatch(editAccount(data))
+      }
+    } else dispatch(editAccount(data))
   }
 
   if (loading) {
@@ -89,19 +92,20 @@ const EditProfile = () => {
           ></input>
           <span className={style.edit__error}>{errors?.email && errors?.email?.message}</span>
         </label>
-        <label className={style.edit__label} htmlFor="newPassword">
+        <label className={style.edit__label} htmlFor="password">
           <span>New password</span>
           <input
             className={style.edit__input}
-            {...register('newPassword', {
+            {...register('password', {
+              required: 'Password field is required',
               minLength: { value: 6, message: 'Your password needs to be at least 6 characters.' },
               maxLength: { value: 40, message: 'Your password needs to be no more 40 characters.' },
             })}
             type="text"
-            id="newPassword"
+            id="password"
             placeholder="New password"
           ></input>
-          <span className={style.edit__error}>{errors?.newPassword && errors?.newPassword?.message}</span>
+          <span className={style.edit__error}>{errors?.password && errors?.password?.message}</span>
         </label>
         <label className={style.edit__label} htmlFor="image">
           <span>Avatar image (url)</span>
@@ -110,7 +114,6 @@ const EditProfile = () => {
             {...register('image', {
               pattern: {
                 value: /^((http|https):\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i,
-                // /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
                 message: 'Invalid url address.',
               },
             })}

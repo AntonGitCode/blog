@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { setEdited } from '../../store/editSlice'
 import { setIsLogged } from '../../store/loginSlice'
 import { getCurrentUser, setLogout, setUserData } from '../../store/userSlice'
+import defaultAvatar from '../../assets/smileycyrus.jpg'
 
 import style from './Header.module.scss'
 
@@ -58,7 +59,7 @@ const Header = () => {
         </Link>
         <Link to="/profile" className={style.header__profile}>
           {username}
-          <img className={style.header__avatar} src={image}></img>
+          <img className={style.header__avatar} src={image?.length ? image : defaultAvatar}></img>
         </Link>
         <button onClick={onLogout} className={style.header__logout}>
           Log Out

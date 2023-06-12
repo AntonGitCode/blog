@@ -1,5 +1,5 @@
 import { Spin } from 'antd'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
@@ -13,14 +13,13 @@ const Registration = () => {
   const dispatch = useDispatch()
   const serverState = useSelector((state) => state.registr)
   const { errorData, loading, currentUser } = serverState
-  // const loginState = useSelector((state) => state.login)
-  // const { isLogged } = loginState
-  const shouldRedirect = !loading && currentUser
+  const loginState = useSelector((state) => state.login)
+  const { isLogged } = loginState
+  const shouldRedirect = !loading && currentUser && isLogged
 
   const {
     register,
     watch,
-    setFocus,
     formState: { errors, isValid },
     handleSubmit,
   } = useForm({ mode: 'onBlur' })
@@ -33,10 +32,6 @@ const Registration = () => {
   if (loading) {
     return <Spin style={{ marginTop: 300 }}></Spin>
   }
-
-  useEffect(() => {
-    setFocus('username')
-  }, [])
 
   const userNameErr = errorData.username ? 'Username ' + errorData.username : null
   const emailErr = errorData.email ? 'Email ' + errorData.email : null

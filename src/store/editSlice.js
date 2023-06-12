@@ -11,6 +11,7 @@ const initialState = {
 
 export const editAccount = createAsyncThunk('edit/editAccount', async (data, { rejectWithValue, dispatch }) => {
   const token = localStorage.getItem('token')
+  console.log('*********** DATA ****\n', data)
   try {
     const response = await fetch(`${BASE_URL}user`, {
       method: 'PUT',
