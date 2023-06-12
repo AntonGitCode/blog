@@ -6,7 +6,7 @@ const initialState = {
   userData: {},
   isLogged: false,
   loading: false,
-  error: false,
+  errorLogin: null,
 }
 
 export const loginAccount = createAsyncThunk('login/loginAccount', async (data, { rejectWithValue, dispatch }) => {
@@ -19,9 +19,8 @@ export const loginAccount = createAsyncThunk('login/loginAccount', async (data, 
       body: JSON.stringify({ user: data }),
     })
     if (!response.ok) {
-      const error = await response.json()
-      dispatch(setLoginErrorData(true))
-      throw new Error('Registration error', error.status)
+      dispatch(setLoginErrorData(response.status))
+      throw new Error('Registration error')
     }
 
     const user = await response.json()
@@ -41,9 +40,10 @@ export const loginSlice = createSlice({
     setLogin: (state, action) => {
       state.userData = action.payload
       state.isLogged = true
+      state.errorLogin = null
     },
     setLoginErrorData: (state, action) => {
-      state.error = action.payload
+      state.errorLogin = action.payload
     },
     setIsLogged: (state, action) => {
       state.isLogged = action.payload
@@ -58,7 +58,6 @@ export const loginSlice = createSlice({
     },
     [loginAccount.rejected]: (state) => {
       state.loading = false
-      state.error = true
     },
   },
 })

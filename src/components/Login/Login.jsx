@@ -12,7 +12,7 @@ import style from './Login.module.scss'
 const Login = () => {
   const dispatch = useDispatch()
   const loginState = useSelector((state) => state.login)
-  const { isLogged, loading, error } = loginState
+  const { isLogged, loading, errorLogin } = loginState
 
   const {
     register,
@@ -32,11 +32,8 @@ const Login = () => {
     return <Spin style={{ marginTop: 300 }}></Spin>
   }
 
-  if (error) {
-    return <Error></Error>
-  }
-
-  const dataErr = error ? 'Email or password is invalid.' : null
+  const dataErr = errorLogin == 422 ? 'Email or password is invalid.' : null
+  if (errorLogin && errorLogin !== 422) return <Error></Error>
 
   return (
     <div className={style.login}>
