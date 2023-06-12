@@ -1,5 +1,5 @@
 import { Spin } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
@@ -8,6 +8,7 @@ import { loginAccount } from '../../store/loginSlice'
 import Error from '../Error'
 
 import style from './Login.module.scss'
+// import { clear } from '@testing-library/user-event/dist/clear'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,12 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: 'onBlur' })
+
+  useEffect(() => {
+    return () => {
+      // dispatch(clearError()) // dispatch an action to clear the error
+    }
+  }, [dispatch])
 
   const onSubmit = (data) => {
     dispatch(loginAccount(data))

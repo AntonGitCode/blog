@@ -37,6 +37,9 @@ export const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.errorLogin = null
+    },
     setLogin: (state, action) => {
       state.userData = action.payload
       state.isLogged = true
