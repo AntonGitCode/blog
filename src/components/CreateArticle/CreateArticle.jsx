@@ -19,6 +19,8 @@ const CreateArticle = () => {
   const { slug } = useParams()
   const auth = localStorage.getItem('token')
 
+  const [defaultFormValues, setDefaultFormValues] = useState({ tagList: [{ value: '' }] })
+
   useEffect(() => {
     if (slug) {
       if (!confirm) {
@@ -35,6 +37,13 @@ const CreateArticle = () => {
     }
   }, [confirm])
 
+  useEffect(() => {
+    if (complete) {
+      console.log('Updating default')
+      setDefaultFormValues(prevArticleData)
+    }
+  }, [complete])
+
   const {
     register,
     formState: { errors },
@@ -42,7 +51,7 @@ const CreateArticle = () => {
     control,
   } = useForm({
     mode: 'onBlur',
-    defaultValues: prevArticleData,
+    defaultValues: defaultFormValues,
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -105,6 +114,7 @@ const CreateArticle = () => {
             type="text"
             id="title"
             placeholder="Title"
+            defaultValue={defaultFormValues.title}
           />
           <span className={style['create__error']}>
             {(errors?.title && errors?.title?.message) || (error?.title && `Title ${error?.title[0]}.`)}
@@ -120,7 +130,8 @@ const CreateArticle = () => {
             type="text"
             id="description"
             placeholder="Short description"
-          ></input>
+            defaultValue={defaultFormValues.description}
+          />
           <span className={style['create__error']}>{errors?.description && errors?.description?.message}</span>
         </label>
         <label className={style.create__label} htmlFor="text">
@@ -133,7 +144,8 @@ const CreateArticle = () => {
             type="text"
             id="body"
             placeholder="Text"
-          ></textarea>
+            defaultValue={defaultFormValues.body}
+          />
           <span className={style['create__error']}>{errors?.body && errors?.body?.message}</span>
         </label>
 

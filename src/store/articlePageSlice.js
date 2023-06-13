@@ -15,6 +15,7 @@ const initialState = {
 
 export const getPage = createAsyncThunk('articlePage/getPage', async (slug, { rejectWithValue, dispatch }) => {
   const token = localStorage.getItem('token')
+  console.log('---get token =', token)
   try {
     if (token) {
       const response = await fetch(`${BASE_URL}articles/${slug}`, {
@@ -31,6 +32,7 @@ export const getPage = createAsyncThunk('articlePage/getPage', async (slug, { re
       }
 
       const article = await response.json()
+      console.log('***article**', article)
       dispatch(setPageData(article.article))
     }
     if (!token) {
