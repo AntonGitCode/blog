@@ -41,6 +41,7 @@ const CreateArticle = () => {
     handleSubmit,
     control,
   } = useForm({
+    mode: 'onBlur',
     defaultValues: prevArticleData,
   })
 
@@ -104,7 +105,7 @@ const CreateArticle = () => {
             type="text"
             id="title"
             placeholder="Title"
-          ></input>
+          />
           <span className={style['create__error']}>
             {(errors?.title && errors?.title?.message) || (error?.title && `Title ${error?.title[0]}.`)}
           </span>
@@ -158,9 +159,9 @@ const CreateArticle = () => {
                       },
                     })}
                     type="text"
-                    id="tagList"
+                    id={`tagList.${index}.value`}
                     placeholder="Tag"
-                  ></input>
+                  />
                   <button className={style.tags__delete} type="button" onClick={() => remove(index)}>
                     Delete
                   </button>
@@ -170,7 +171,9 @@ const CreateArticle = () => {
                     </button>
                   )}
                 </div>
-                <span className={style['create__error']}>{errors?.tagList && errors?.tagList?.message}</span>
+                {errors.tagList && errors.tagList[index] && (
+                  <span className={style['create__error']}>{errors.tagList[index].value.message}</span>
+                )}
               </div>
             ))}
           </div>
