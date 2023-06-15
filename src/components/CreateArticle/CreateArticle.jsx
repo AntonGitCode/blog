@@ -80,7 +80,7 @@ const CreateArticle = () => {
   }
 
   if (!auth) {
-    return <Redirect to="/login"></Redirect>
+    return <Redirect to="/sign-in"></Redirect>
   }
 
   if (edited) {
