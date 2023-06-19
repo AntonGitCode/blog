@@ -14,7 +14,10 @@
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "prettier"
+  ],
+  "overrides": [
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -91,6 +94,9 @@
     ]
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "node": {
         "extensions": [
@@ -104,9 +110,6 @@
           "src/"
         ]
       }
-    },
-    "react": {
-      "version": "detect"
     }
   }
 }

@@ -12,7 +12,13 @@ const ArticleList = () => {
   const likeLoading = useSelector((state) => state.articlePage.likeLoading)
 
   useEffect(() => {
-    dispatch(getArticles())
+    const savedPage = localStorage.getItem('blogpage')
+    if (savedPage) {
+      dispatch(setPage(parseInt(savedPage)))
+      dispatch(getArticles(parseInt(savedPage)))
+    } else {
+      dispatch(getArticles())
+    }
   }, [likeLoading])
 
   if (loading) {
@@ -32,6 +38,7 @@ const ArticleList = () => {
         style={{ marginLeft: 'auto', marginRight: 'auto', marginBottom: 20 }}
         defaultCurrent={currPage}
         onChange={(page) => {
+          localStorage.setItem('blogpage', page)
           dispatch(setPage(page))
           dispatch(getArticles(page))
         }}

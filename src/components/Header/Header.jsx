@@ -35,6 +35,7 @@ const Header = () => {
 
   const onLogout = () => {
     localStorage.removeItem('token')
+    if (localStorage.getItem('blogpage')) localStorage.removeItem('blogpage')
     dispatch(setIsLogged(false))
     dispatch(setLogout())
     history.push('/')
@@ -68,6 +69,7 @@ const Header = () => {
       </>
     )
   }
+
   return (
     <div className={style.header}>
       <Link to="/" className={style.header__name}>

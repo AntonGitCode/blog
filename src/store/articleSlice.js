@@ -61,17 +61,18 @@ export const articleSlice = createSlice({
       state.currPage = action.payload
     },
   },
-  extraReducers: {
-    [getArticles.fulfilled]: (state) => {
-      state.loading = false
-    },
-    [getArticles.pending]: (state) => {
-      state.loading = true
-    },
-    [getArticles.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getArticles.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(getArticles.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getArticles.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
   },
 })
 

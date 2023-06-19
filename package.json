@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.7.3",
     "eslint": "^8.33.0",
@@ -52,7 +53,7 @@
     "prepare": "husky install",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "format": "prettier ./src --write"
+    "format": "prettier --write src/**/*.{js,css,json} --config ./.prettierrc.json"
   },
   "eslintConfig": {
     "extends": [

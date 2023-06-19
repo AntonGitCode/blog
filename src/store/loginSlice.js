@@ -52,16 +52,17 @@ export const loginSlice = createSlice({
       state.isLogged = action.payload
     },
   },
-  extraReducers: {
-    [loginAccount.fulfilled]: (state) => {
-      state.loading = false
-    },
-    [loginAccount.pending]: (state) => {
-      state.loading = true
-    },
-    [loginAccount.rejected]: (state) => {
-      state.loading = false
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginAccount.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(loginAccount.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(loginAccount.rejected, (state) => {
+        state.loading = false
+      })
   },
 })
 

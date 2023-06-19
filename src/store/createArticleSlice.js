@@ -53,16 +53,17 @@ export const createArticleSlice = createSlice({
       state.error = action.payload
     },
   },
-  extraReducers: {
-    [createArticle.fulfilled]: (state) => {
-      state.loading = false
-    },
-    [createArticle.pending]: (state) => {
-      state.loading = true
-    },
-    [createArticle.rejected]: (state) => {
-      state.loading = false
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createArticle.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(createArticle.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createArticle.rejected, (state) => {
+        state.loading = false
+      })
   },
 })
 

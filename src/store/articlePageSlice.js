@@ -15,7 +15,6 @@ const initialState = {
 
 export const getPage = createAsyncThunk('articlePage/getPage', async (slug, { rejectWithValue, dispatch }) => {
   const token = localStorage.getItem('token')
-  console.log('---get token =', token)
   try {
     if (token) {
       const response = await fetch(`${BASE_URL}articles/${slug}`, {
@@ -32,7 +31,6 @@ export const getPage = createAsyncThunk('articlePage/getPage', async (slug, { re
       }
 
       const article = await response.json()
-      console.log('***article**', article)
       dispatch(setPageData(article.article))
     }
     if (!token) {
@@ -167,60 +165,61 @@ export const articlePageSlice = createSlice({
       state.deleted = action.payload
     },
   },
-  extraReducers: {
-    [getPage.fulfilled]: (state) => {
-      state.confirm = true
-      state.loading = false
-    },
-    [getPage.pending]: (state) => {
-      state.loading = true
-    },
-    [getPage.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
-    [updateArticle.fulfilled]: (state) => {
-      state.loading = false
-    },
-    [updateArticle.pending]: (state) => {
-      state.loading = true
-    },
-    [updateArticle.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
-    [deleteArticle.fulfilled]: (state) => {
-      state.deleted = true
-      state.loading = false
-    },
-    [deleteArticle.pending]: (state) => {
-      state.loading = true
-    },
-    [deleteArticle.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
-    [likeArticle.fulfilled]: (state) => {
-      state.likeLoading = false
-    },
-    [likeArticle.pending]: (state) => {
-      state.likeLoading = true
-    },
-    [likeArticle.rejected]: (state) => {
-      state.likeLoading = false
-      state.error = true
-    },
-    [unlikeArticle.fulfilled]: (state) => {
-      state.deleted = true
-      state.likeLoading = false
-    },
-    [unlikeArticle.pending]: (state) => {
-      state.likeLoading = true
-    },
-    [unlikeArticle.rejected]: (state) => {
-      state.likeLoading = false
-      state.error = true
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPage.fulfilled, (state) => {
+        state.confirm = true
+        state.loading = false
+      })
+      .addCase(getPage.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getPage.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
+      .addCase(updateArticle.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(updateArticle.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateArticle.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
+      .addCase(deleteArticle.fulfilled, (state) => {
+        state.deleted = true
+        state.loading = false
+      })
+      .addCase(deleteArticle.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteArticle.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
+      .addCase(likeArticle.fulfilled, (state) => {
+        state.likeLoading = false
+      })
+      .addCase(likeArticle.pending, (state) => {
+        state.likeLoading = true
+      })
+      .addCase(likeArticle.rejected, (state) => {
+        state.likeLoading = false
+        state.error = true
+      })
+      .addCase(unlikeArticle.fulfilled, (state) => {
+        state.deleted = true
+        state.likeLoading = false
+      })
+      .addCase(unlikeArticle.pending, (state) => {
+        state.likeLoading = true
+      })
+      .addCase(unlikeArticle.rejected, (state) => {
+        state.likeLoading = false
+        state.error = true
+      })
   },
 })
 

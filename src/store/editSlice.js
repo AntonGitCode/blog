@@ -56,18 +56,19 @@ export const editSlice = createSlice({
       state.isCompleted = action.payload
     },
   },
-  extraReducers: {
-    [editAccount.fulfilled]: (state) => {
-      state.loading = false
-      state.isCompleted = true
-    },
-    [editAccount.pending]: (state) => {
-      state.loading = true
-    },
-    [editAccount.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(editAccount.fulfilled, (state) => {
+        state.loading = false
+        state.isCompleted = true
+      })
+      .addCase(editAccount.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(editAccount.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
   },
 })
 

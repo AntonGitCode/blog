@@ -44,18 +44,19 @@ export const registrSlice = createSlice({
       state.errorData = action.payload
     },
   },
-  extraReducers: {
-    [registrAccount.fulfilled]: (state, action) => {
-      state.loading = false
-      state.currentUser = action.payload.user
-    },
-    [registrAccount.pending]: (state) => {
-      state.loading = true
-    },
-    [registrAccount.rejected]: (state) => {
-      state.loading = false
-      state.error = true
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registrAccount.fulfilled, (state, action) => {
+        state.loading = false
+        state.currentUser = action.payload.user
+      })
+      .addCase(registrAccount.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(registrAccount.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
   },
 })
 

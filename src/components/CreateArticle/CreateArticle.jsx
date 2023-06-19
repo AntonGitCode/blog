@@ -107,6 +107,10 @@ const CreateArticle = () => {
             className={style.create__input}
             {...register('title', {
               required: 'Title field is required.',
+              pattern: {
+                value: /^[^\s][\s\S]*$/,
+                message: 'Please, delete spaces before Title name',
+              },
             })}
             type="text"
             id="title"
@@ -122,6 +126,10 @@ const CreateArticle = () => {
             className={style.create__input}
             {...register('description', {
               required: 'Description field is required.',
+              pattern: {
+                value: /^[^\s][\s\S]*$/,
+                message: 'Please, delete spaces before Description',
+              },
             })}
             type="text"
             id="description"
