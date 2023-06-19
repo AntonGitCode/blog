@@ -34,15 +34,14 @@ const Article = ({
   const auth = localStorage.getItem('token')
   const { image, username } = author
 
-  const tags = tagList
-    .filter((el) => el.trim() !== '')
-    .map((el) => {
-      return (
-        <span key={el} className={style.article__tag}>
-          {el}
-        </span>
-      )
-    })
+  const uniqueTags = [...new Set(tagList.filter((el) => el.trim() !== ''))]
+  const tags = uniqueTags.map((el) => {
+    return (
+      <span key={el} className={style.article__tag}>
+        {el}
+      </span>
+    )
+  })
 
   const cutOverview = (string) => {
     if (string) {
