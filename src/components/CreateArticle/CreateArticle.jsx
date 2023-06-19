@@ -109,7 +109,7 @@ const CreateArticle = () => {
               required: 'Title field is required.',
               pattern: {
                 value: /^[^\s][\s\S]*$/,
-                message: 'Please, delete spaces before Title name',
+                message: 'Title cannot start with spaces',
               },
             })}
             type="text"
@@ -128,7 +128,7 @@ const CreateArticle = () => {
               required: 'Description field is required.',
               pattern: {
                 value: /^[^\s][\s\S]*$/,
-                message: 'Please, delete spaces before Description',
+                message: 'Description cannot start with spaces',
               },
             })}
             type="text"

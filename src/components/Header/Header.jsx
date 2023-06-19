@@ -35,7 +35,6 @@ const Header = () => {
 
   const onLogout = () => {
     localStorage.removeItem('token')
-    if (localStorage.getItem('blogpage')) localStorage.removeItem('blogpage')
     dispatch(setIsLogged(false))
     dispatch(setLogout())
     history.push('/')
